@@ -1,4 +1,4 @@
-# generator-microservice [![Build Status](https://secure.travis-ci.org/robsonke/generator-microservice.png?branch=master)](https://travis-ci.org/robsonke/generator-microservice)
+# generator-microservice [![Build Status](https://secure.travis-ci.org/MaxxtonGroup/generator-microservice.png?branch=master)](https://travis-ci.org/MaxxtonGroup/generator-microservice)
 
 > [Yeoman](http://yeoman.io) generator
 
