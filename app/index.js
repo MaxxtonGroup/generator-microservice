@@ -16,7 +16,7 @@ var yosay = require('yosay');
  * 
  * TODO:
  * - application flavors
- * - subgenerators
+ * - subgenerators for services, controllers, repositories
  */
 
 
@@ -51,36 +51,38 @@ module.exports = yeoman.generators.Base.extend({
       'Lets get started with some questions!\n\n' 
     );
 
+    var maxPrompts = 6;
+
     var prompts = [{
       type: 'string',
       name: 'baseName',
-      message: '(1/5) What is the base name of this microservice?',
+      message: '(1/'+maxPrompts+') What is the base name of this microservice?',
       default: 'awesome-service'
     },
     {
       type: 'string',
       name: 'packageName',
-      message: '(2/5) What is your default package?',
+      message: '(2/'+maxPrompts+') What is your default package?',
       default: 'com.maxxton.awesome'
     },
     {
       type: 'string',
       name: 'userName',
-      message: '(3/5) What is your name?',
+      message: '(3/'+maxPrompts+') What is your name?',
       default: 'M. Axxton',
       store: true
     },
     {
       type: 'string',
       name: 'userEmail',
-      message: '(4/5) What is your email?',
+      message: '(4/'+maxPrompts+') What is your email?',
       default: 'm.axxton@maxxton.com',
       store: true
     },
     {
       type: 'list',
       name: 'serviceType',
-      message: '(5/5) Select the kind of service you need.',
+      message: '(5/'+maxPrompts+') Select the kind of service you need.',
       choices: [
         {
           name: 'Basic (empty application which uses only default options)',
@@ -95,7 +97,14 @@ module.exports = yeoman.generators.Base.extend({
           value: 'low'
         }
       ]
-    }];
+    },
+    {
+      type: 'confirm',
+      name: 'needDocker',
+      message: '(6/'+maxPrompts+') Shall I generate a default Dockerfile?',
+      default: 'Y'
+    },
+    ];
 
     this.prompt(prompts, function (props) {
       this.props = props;
@@ -105,6 +114,10 @@ module.exports = yeoman.generators.Base.extend({
       this.props.currentYear = (new Date()).getFullYear();
       this.props.mainClassName = createAppName(this.props.baseName);
 
+      this.props.isBasic = this.props.serviceType === 'basic';
+      this.props.isHigh = this.props.serviceType === 'high';
+      this.props.isLow = this.props.serviceType === 'low';
+
       done();
     }.bind(this));
   },
@@ -113,6 +126,8 @@ module.exports = yeoman.generators.Base.extend({
 
       var packageFolder = this.props.packageName.replace(/\./g, '/');
       var srcDir = 'src/main/java/' + packageFolder;
+
+
 
       var variables = {
         author: this.props.author,
@@ -131,6 +146,14 @@ module.exports = yeoman.generators.Base.extend({
         this.destinationPath('build.gradle'),
         variables
       );
+
+      if(this.props.needDocker) {
+        this.fs.copyTpl(
+          this.templatePath('Dockerfile'),
+          this.destinationPath('src/main/docker/Dockerfile'),
+          variables
+        );
+      }
 
       this.fs.copyTpl(
         this.templatePath('MaxxtonApplication.java'),
