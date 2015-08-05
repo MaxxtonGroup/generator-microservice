@@ -8,3 +8,6 @@
 >> Maxxton <%= baseName %>
 
 ...Starting up version: ${application.version}
+
+Author <%= author %>
+Copyright Maxxton Group <%= currentYear %>

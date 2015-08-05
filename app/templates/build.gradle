@@ -57,9 +57,15 @@ repositories {
 
 dependencies {
   compile("org.springframework.boot:spring-boot-starter")
+  compile("org.springframework.cloud:spring-cloud-starter")
+  compile("org.springframework.cloud:spring-cloud-starter-security")
+  compile("org.springframework.security.oauth:spring-security-oauth2")
+  compile("org.springframework.cloud:spring-cloud-starter-eureka")
+
   testCompile("org.springframework.boot:spring-boot-starter-test")
 }
-
+   
+    
 
 eclipse {
   classpath {
