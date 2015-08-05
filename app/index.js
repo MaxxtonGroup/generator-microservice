@@ -156,6 +156,30 @@ module.exports = yeoman.generators.Base.extend({
       }
 
       this.fs.copyTpl(
+        this.templatePath('logback.xml'),
+        this.destinationPath('src/main/resources/logback.xml'),
+        variables
+      );
+
+      this.fs.copyTpl(
+        this.templatePath('banner.txt'),
+        this.destinationPath('src/main/resources/banner.txt'),
+        variables
+      );
+
+      this.fs.copyTpl(
+        this.templatePath('application.yml'),
+        this.destinationPath('src/main/resources/application.yml'),
+        variables
+      );
+
+      this.fs.copyTpl(
+        this.templatePath('bootstrap.yml'),
+        this.destinationPath('src/main/resources/bootstrap.yml'),
+        variables
+      );
+      
+      this.fs.copyTpl(
         this.templatePath('MaxxtonApplication.java'),
         this.destinationPath(srcDir + '/'+ this.props.mainClassName +'.java'),
         variables
@@ -166,6 +190,17 @@ module.exports = yeoman.generators.Base.extend({
         this.destinationPath(srcDir + '/'+ this.props.mainClassName +'Test.java'),
         variables
       );
+
+
+
+      
+
+      
+
+      
+
+      
+
 
     },
     projectfiles: function () {

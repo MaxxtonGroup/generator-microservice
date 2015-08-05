@@ -1,0 +1,14 @@
+# allow to restart the app context through /restart
+endpoints:
+  restart:
+    enabled: true
+
+spring:
+  cloud:
+    config:
+      #tobechanged
+      uri: http://localhost:8888
+      failFast: true
+
+  application:
+    name: roompot
