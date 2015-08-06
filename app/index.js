@@ -126,7 +126,7 @@ module.exports = yeoman.generators.Base.extend({
 
       var packageFolder = this.props.packageName.replace(/\./g, '/');
       var srcDir = 'src/main/java/' + packageFolder;
-      var testDir = 'test/main/java/' + packageFolder;
+      var testDir = 'src/test/java/' + packageFolder;
 
       var variables = {
         author: this.props.author,
