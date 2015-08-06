@@ -22,8 +22,7 @@ var yosay = require('yosay');
 
 var createAppName = function(str)
 {
-  str = str.replace('-', ' ');
-  str = str.replace('_', ' ');
+  str = str.replace(new RegExp('-|_', 'g'), ' ');
   
   var partsOfStr = str.split(' ');
   var result = '';
@@ -33,7 +32,6 @@ var createAppName = function(str)
   
   return result;
 }
-
 
 module.exports = yeoman.generators.Base.extend({
 
