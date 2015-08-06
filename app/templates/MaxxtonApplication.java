@@ -1,9 +1,25 @@
 package <%= packageName %>;
 
+import java.io.IOException;
+import java.util.Arrays;
+
+import javax.annotation.PostConstruct;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.SimpleCommandLinePropertySource;
+
+
+
+import java.util.Arrays;
 
 /**
  * Maxxton Microservice main class 
@@ -11,13 +27,14 @@ import org.springframework.context.annotation.ComponentScan;
  * @author <%= author %>
  * @copyright Maxxton Group <%= currentYear %>
  */
-@EnableAutoConfiguration
-@ComponentScan
+@SpringBootApplication
 @EnableDiscoveryClient
 public class <%= mainClassName %>
 {
+  private final static Logger log = LoggerFactory.getLogger(<%= mainClassName %>.class);
 
-  private final static Logger log = LoggerFactory.getLogger(NwsprotoBootApplication.class);
+  @Autowired
+  private ConfigurableEnvironment environment;
 
   public static void main(String[] args)
   {
@@ -36,7 +53,7 @@ public class <%= mainClassName %>
     if (environment.getActiveProfiles().length == 0)
     {
       log.warn("No Spring profile configured, running with default configuration");
-      configurableEnvironment.setActiveProfiles("development");
+      environment.setActiveProfiles("development");
     }
     else
     {

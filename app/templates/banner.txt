@@ -5,9 +5,9 @@
 |_|  |_|\__,_/_/\_\/_/\_\\__\___/|_| |_|
 ========================================
 
->> Maxxton <%= baseName %>
+Maxxton <%= baseName %>
 
 ...Starting up version: ${application.version}
 
-Author <%= author %>
-Copyright Maxxton Group <%= currentYear %>
+Author:    <%= author %>
+Copyright: Maxxton Group <%= currentYear %>

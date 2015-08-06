@@ -112,7 +112,7 @@ module.exports = yeoman.generators.Base.extend({
       // composed ones
       this.props.author = this.props.userName + ' (' + this.props.userEmail + ')';
       this.props.currentYear = (new Date()).getFullYear();
-      this.props.mainClassName = createAppName(this.props.baseName);
+      this.props.mainClassName = createAppName(this.props.baseName) + 'Application';
 
       this.props.isBasic = this.props.serviceType === 'basic';
       this.props.isHigh = this.props.serviceType === 'high';
@@ -126,8 +126,7 @@ module.exports = yeoman.generators.Base.extend({
 
       var packageFolder = this.props.packageName.replace(/\./g, '/');
       var srcDir = 'src/main/java/' + packageFolder;
-
-
+      var testDir = 'test/main/java/' + packageFolder;
 
       var variables = {
         author: this.props.author,
@@ -144,39 +143,45 @@ module.exports = yeoman.generators.Base.extend({
       this.fs.copyTpl(
         this.templatePath('build.gradle'),
         this.destinationPath('build.gradle'),
-        variables
+        variables,
+        { 'interpolate': /<%=([\s\S]+?)%>/g }
       );
 
       if(this.props.needDocker) {
         this.fs.copyTpl(
           this.templatePath('Dockerfile'),
           this.destinationPath('src/main/docker/Dockerfile'),
-          variables
+          variables,
+        { 'interpolate': /<%=([\s\S]+?)%>/g }
         );
       }
 
       this.fs.copyTpl(
         this.templatePath('logback.xml'),
         this.destinationPath('src/main/resources/logback.xml'),
-        variables
+        variables,
+        { 'interpolate': /<%=([\s\S]+?)%>/g }
       );
 
       this.fs.copyTpl(
         this.templatePath('banner.txt'),
         this.destinationPath('src/main/resources/banner.txt'),
-        variables
+        variables,
+        { 'interpolate': /<%=([\s\S]+?)%>/g }
       );
 
       this.fs.copyTpl(
         this.templatePath('application.yml'),
         this.destinationPath('src/main/resources/application.yml'),
-        variables
+        variables,
+        { 'interpolate': /<%=([\s\S]+?)%>/g }
       );
 
       this.fs.copyTpl(
         this.templatePath('bootstrap.yml'),
         this.destinationPath('src/main/resources/bootstrap.yml'),
-        variables
+        variables,
+        { 'interpolate': /<%=([\s\S]+?)%>/g }
       );
       
       this.fs.copyTpl(
@@ -187,25 +192,16 @@ module.exports = yeoman.generators.Base.extend({
 
       this.fs.copyTpl(
         this.templatePath('ApplicationProfile.java'),
-        this.destinationPath(srcDir + '/config/'+ this.props.mainClassName +'.java'),
+        this.destinationPath(srcDir + '/config/ApplicationProfile.java'),
         variables
       );
 
       this.fs.copyTpl(
         this.templatePath('MaxxtonApplicationTest.java'),
-        this.destinationPath(srcDir + '/'+ this.props.mainClassName +'Test.java'),
+        this.destinationPath(testDir + '/'+ this.props.mainClassName +'Test.java'),
         variables
       );
 
-
-
-      
-
-      
-
-      
-
-      
 
 
     },
