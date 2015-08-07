@@ -49,7 +49,7 @@ module.exports = yeoman.generators.Base.extend({
       'Lets get started with some questions!\n\n' 
     );
 
-    var maxPrompts = 6;
+    var maxPrompts = 7;
 
     var prompts = [{
       type: 'string',
@@ -102,6 +102,21 @@ module.exports = yeoman.generators.Base.extend({
       message: '(6/'+maxPrompts+') Shall I generate a default Dockerfile?',
       default: 'Y'
     },
+    {
+      type: 'checkbox',
+      name: 'examples',
+      message: '(7/'+maxPrompts+') Do you want to generate example classes?',
+      choices: [
+        {
+          name: 'RxJava example',
+          value: 'rxjava'
+        },
+        {
+          name: 'Eureka example',
+          value: 'eureka'
+        },
+      ]
+    },
     ];
 
     this.prompt(prompts, function (props) {
@@ -144,6 +159,17 @@ module.exports = yeoman.generators.Base.extend({
         variables,
         { 'interpolate': /<%=([\s\S]+?)%>/g }
       );
+
+      if(this.props.examples.length > 0){
+        this.props.examples.forEach(function(example){
+          this.fs.copyTpl(
+            this.templatePath('examples/' + example + 'Example.java'),
+            this.destinationPath(srcDir + '/examples/' +  example + 'Example.java'),
+            variables,
+            { 'interpolate': /<%=([\s\S]+?)%>/g }
+          );
+        }, this);
+      }
 
       if(this.props.needDocker) {
         this.fs.copyTpl(
