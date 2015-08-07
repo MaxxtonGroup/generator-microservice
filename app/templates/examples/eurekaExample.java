@@ -1,4 +1,4 @@
-package <%= packageName %>;
+package <%= packageName %>.examples;
 
 /**
  * HOW TO CONFIGURE YOUR APPLICATION TO WORK WITH THE EUREKA SERVER

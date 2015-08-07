@@ -1,4 +1,4 @@
-package <%= packageName %>;
+package <%= packageName %>.examples;
 
 import rx.Observable;
 import rx.functions.Func2;
