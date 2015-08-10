@@ -3,8 +3,7 @@ spring:
     name: <%= baseName %>
   cloud:
     config:
-      #tobechanged
-      uri: http://localhost:8888
-      failFast: true
+      uri: <%= configUri %>
+      failFast: <%= configFail %>
 encrypt:
   failOnError: false

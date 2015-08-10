@@ -5,7 +5,7 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 
 /**
- * Maxxton Eureka generator
+ * Maxxton RxJava generator
  * ========================
  * Version: 1.0
  * Author: R. Hermans (r.hermans@maxxton.com)
@@ -31,7 +31,7 @@ module.exports = yeoman.generators.Base.extend({
     		name: 'genExample',
     		type: 'confirm',
     		message: '(1/'+maxPrompts+') Would you like to generate a usage example of Reactive Java?',
-    		default: 'n'
+    		default: false
     	},
 		];
 

@@ -56,7 +56,7 @@ module.exports = yeoman.generators.Base.extend({
   prompting: function () {
     var done = this.async();
 
-    var maxPrompts = 6;
+    var maxPrompts = 8;
 
     var prompts = 
     [
@@ -106,10 +106,25 @@ module.exports = yeoman.generators.Base.extend({
         ]
       },
       {
+        type: 'string',
+        name: 'configUri',
+        message: '(6/'+maxPrompts+') Provide the uri for the Spring Config Server.',
+        default: 'http://localhost:8888',
+        store: true
+      },
+      {
+        type: 'confirm',
+        name: 'configFail',
+        message: '(7/'+maxPrompts+') Should the service fail fast when not being able to connect to the Spring Config Server?',
+        default: true,
+        store: true
+      },
+      {
         type: 'confirm',
         name: 'needDocker',
-        message: '(6/'+maxPrompts+') Shall I generate a default Dockerfile?',
-        default: 'Y'
+        message: '(8/'+maxPrompts+') Shall I generate a default Dockerfile?',
+        default: 'Y',
+        store: true
       },
     ];
 
@@ -143,7 +158,9 @@ module.exports = yeoman.generators.Base.extend({
         userEmail: this.props.userEmail,
         userName: this.props.userName,
         packageName: this.props.packageName,
-        baseName: this.props.baseName
+        baseName: this.props.baseName,
+        configUri: this.props.configUri,
+        configFail: this.props.configFail
       };
 
       // write all files now, with or without template functionality

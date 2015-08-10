@@ -54,7 +54,7 @@ module.exports = yeoman.generators.Base.extend({
     		name: 'genExample',
     		type: 'confirm',
     		message: '(1/'+maxPrompts+') Would you like to generate a usage example of the Eureka client?',
-    		default: 'n'
+    		default: false,
     	},
     	{
     		name: 'connectionType',
