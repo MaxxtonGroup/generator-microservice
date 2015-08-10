@@ -6,7 +6,6 @@ var chalk = require('chalk');
 var yosay = require('yosay');
 var jsfs = require('fs');
 
-
 /**
  * Maxxton Microservice generator
  * ==============================

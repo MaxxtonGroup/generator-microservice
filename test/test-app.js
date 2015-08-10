@@ -10,12 +10,13 @@ describe('generator-microservice:app', function () {
     helpers.run(path.join(__dirname, '../app'))
       .withOptions({ skipInstall: true })
       .withPrompts({ someOption: true })
-      .on('end', done);
+      done();
   });
 
-  it('creates files', function () {
+  it('creates files', function (done) {
     assert.file([
       '.editorconfig'
     ]);
+    done();
   });
 });
