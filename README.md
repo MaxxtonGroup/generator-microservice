@@ -26,6 +26,7 @@ npm install -g yo
 3. call:
 ```bash
 npm link
+npm install
 ```
 4. create a directory for your new project
 5. go to that directory in your console
