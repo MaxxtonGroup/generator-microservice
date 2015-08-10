@@ -1,5 +1,10 @@
 spring:
   application:
     name: <%= baseName %>
+  cloud:
+    config:
+      #tobechanged
+      uri: http://localhost:8888
+      failFast: true
 encrypt:
   failOnError: false
