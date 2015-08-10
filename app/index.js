@@ -35,8 +35,9 @@ var createAppName = function(str)
 
 module.exports = yeoman.generators.Base.extend({
 
-  prompting: function () {
-    var done = this.async();
+  constructor: function (args, options, config) 
+  {
+    yeoman.generators.Base.apply(this, arguments);
 
     // greet the user
     this.log(
@@ -49,74 +50,67 @@ module.exports = yeoman.generators.Base.extend({
       'Lets get started with some questions!\n\n' 
     );
 
-    var maxPrompts = 7;
+    this.log(chalk.magenta('Generating service structure'));
+  },
 
-    var prompts = [{
-      type: 'string',
-      name: 'baseName',
-      message: '(1/'+maxPrompts+') What is the base name of this microservice?',
-      default: 'awesome-service'
-    },
-    {
-      type: 'string',
-      name: 'packageName',
-      message: '(2/'+maxPrompts+') What is your default package?',
-      default: 'com.maxxton.awesome'
-    },
-    {
-      type: 'string',
-      name: 'userName',
-      message: '(3/'+maxPrompts+') What is your name?',
-      default: 'M. Axxton',
-      store: true
-    },
-    {
-      type: 'string',
-      name: 'userEmail',
-      message: '(4/'+maxPrompts+') What is your email?',
-      default: 'm.axxton@maxxton.com',
-      store: true
-    },
-    {
-      type: 'list',
-      name: 'serviceType',
-      message: '(5/'+maxPrompts+') Select the kind of service you need.',
-      choices: [
-        {
-          name: 'Basic (empty application which uses only default options)',
-          value: 'basic'
-        },
-        {
-          name: 'High level service (A business logic service with a rest interface)',
-          value: 'high'
-        },
-        {
-          name: 'Low level service (A backend service talking to datasources and never gets called by a user directly)',
-          value: 'low'
-        }
-      ]
-    },
-    {
-      type: 'confirm',
-      name: 'needDocker',
-      message: '(6/'+maxPrompts+') Shall I generate a default Dockerfile?',
-      default: 'Y'
-    },
-    {
-      type: 'checkbox',
-      name: 'examples',
-      message: '(7/'+maxPrompts+') Do you want to generate example classes?',
-      choices: [
-        {
-          name: 'RxJava example',
-          value: 'rxjava'
-        },
-        {
-          name: 'Eureka example',
-          value: 'eureka'
-        },
-      ]
-    },
+  prompting: function () {
+    var done = this.async();
+
+    var maxPrompts = 6;
+
+    var prompts = 
+    [
+      {
+        type: 'string',
+        name: 'baseName',
+        message: '(1/'+maxPrompts+') What is the base name of this microservice?',
+        default: 'awesome-service'
+      },
+      {
+        type: 'string',
+        name: 'packageName',
+        message: '(2/'+maxPrompts+') What is your default package?',
+        default: 'com.maxxton.awesome'
+      },
+      {
+        type: 'string',
+        name: 'userName',
+        message: '(3/'+maxPrompts+') What is your name?',
+        default: 'M. Axxton',
+        store: true
+      },
+      {
+        type: 'string',
+        name: 'userEmail',
+        message: '(4/'+maxPrompts+') What is your email?',
+        default: 'm.axxton@maxxton.com',
+        store: true
+      },
+      {
+        type: 'list',
+        name: 'serviceType',
+        message: '(5/'+maxPrompts+') Select the kind of service you need.',
+        choices: [
+          {
+            name: 'Basic (empty application which uses only default options)',
+            value: 'basic'
+          },
+          {
+            name: 'High level service (A business logic service with a rest interface)',
+            value: 'high'
+          },
+          {
+            name: 'Low level service (A backend service talking to datasources and never gets called by a user directly)',
+            value: 'low'
+          }
+        ]
+      },
+      {
+        type: 'confirm',
+        name: 'needDocker',
+        message: '(6/'+maxPrompts+') Shall I generate a default Dockerfile?',
+        default: 'Y'
+      },
     ];
 
     this.prompt(prompts, function (props) {
@@ -141,7 +135,7 @@ module.exports = yeoman.generators.Base.extend({
       var srcDir = 'src/main/java/' + packageFolder;
       var testDir = 'src/test/java/' + packageFolder;
 
-      var variables = {
+      this.variables = {
         author: this.props.author,
         currentYear: this.props.currentYear,
         serviceType: this.props.serviceType,
@@ -156,26 +150,15 @@ module.exports = yeoman.generators.Base.extend({
       this.fs.copyTpl(
         this.templatePath('build.gradle'),
         this.destinationPath('build.gradle'),
-        variables,
+        this.variables,
         { 'interpolate': /<%=([\s\S]+?)%>/g }
       );
-
-      if(this.props.examples.length > 0){
-        this.props.examples.forEach(function(example){
-          this.fs.copyTpl(
-            this.templatePath('examples/' + example + 'Example.java'),
-            this.destinationPath(srcDir + '/examples/' +  example + 'Example.java'),
-            variables,
-            { 'interpolate': /<%=([\s\S]+?)%>/g }
-          );
-        }, this);
-      }
 
       if(this.props.needDocker) {
         this.fs.copyTpl(
           this.templatePath('Dockerfile'),
           this.destinationPath('src/main/docker/Dockerfile'),
-          variables,
+          this.variables,
         { 'interpolate': /<%=([\s\S]+?)%>/g }
         );
       }
@@ -183,51 +166,48 @@ module.exports = yeoman.generators.Base.extend({
       this.fs.copyTpl(
         this.templatePath('logback.xml'),
         this.destinationPath('src/main/resources/logback.xml'),
-        variables,
+        this.variables,
         { 'interpolate': /<%=([\s\S]+?)%>/g }
       );
 
       this.fs.copyTpl(
         this.templatePath('banner.txt'),
         this.destinationPath('src/main/resources/banner.txt'),
-        variables,
+        this.variables,
         { 'interpolate': /<%=([\s\S]+?)%>/g }
       );
 
       this.fs.copyTpl(
         this.templatePath('application.yml'),
         this.destinationPath('src/main/resources/application.yml'),
-        variables,
+        this.variables,
         { 'interpolate': /<%=([\s\S]+?)%>/g }
       );
 
       this.fs.copyTpl(
         this.templatePath('bootstrap.yml'),
         this.destinationPath('src/main/resources/bootstrap.yml'),
-        variables,
+        this.variables,
         { 'interpolate': /<%=([\s\S]+?)%>/g }
       );
       
       this.fs.copyTpl(
         this.templatePath('MaxxtonApplication.java'),
         this.destinationPath(srcDir + '/'+ this.props.mainClassName +'.java'),
-        variables
+        this.variables
       );
 
       this.fs.copyTpl(
         this.templatePath('ApplicationProfile.java'),
         this.destinationPath(srcDir + '/config/ApplicationProfile.java'),
-        variables
+        this.variables
       );
 
       this.fs.copyTpl(
         this.templatePath('MaxxtonApplicationTest.java'),
         this.destinationPath(testDir + '/'+ this.props.mainClassName +'Test.java'),
-        variables
+        this.variables
       );
-
-
-
     },
     projectfiles: function () {
       this.fs.copy(
@@ -240,7 +220,12 @@ module.exports = yeoman.generators.Base.extend({
     
   },
   end: function () {
-    this.log('All done, happy coding!');
+    this.log(chalk.green('Basic service completed!\n'));
+
+    // Call depending generators
+    this.composeWith("microservice:eureka", {options: {vars: this.variables}}).on('end', function(){
+      this.composeWith("microservice:rxjava", {options: {vars: this.variables}});
+    });
   }
 });
 
