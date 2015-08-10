@@ -1,5 +1,9 @@
 package <%= packageName %>.examples;
 
+import com.netflix.appinfo.InstanceInfo;
+import com.netflix.discovery.DiscoveryClient;
+import org.springframework.boot.SpringApplication;
+
 /**
  * HOW TO CONFIGURE YOUR APPLICATION TO WORK WITH THE EUREKA SERVER
  * ################################################################
@@ -57,14 +61,14 @@ public class EurekaExample
 
 	public EurekaExample()
 	{
-		Sytem.out.println(this.getLocation());
+		System.out.println(this.getLocation());
 	}
 
 	/**
    * ! Commented in case !
    * @Autowired
    */
-	private DiscoveryClient client;
+	private DiscoveryClient discoveryClient;
 
 	/**
 	 * Fetches the information of the service with id "EurekaExample".

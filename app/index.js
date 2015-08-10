@@ -4,6 +4,7 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
+var jsfs = require('fs');
 
 
 /**
@@ -150,6 +151,13 @@ module.exports = yeoman.generators.Base.extend({
       var srcDir = 'src/main/java/' + packageFolder;
       var testDir = 'src/test/java/' + packageFolder;
 
+      var deps = "";
+      if(this.props.isLow){
+        deps = jsfs.readFileSync(this.sourceRoot() + '/low.gradle','utf8');
+      }else if(this.props.isHigh){
+        deps = jsfs.readFileSync(this.sourceRoot() + '/high.gradle','utf8');
+      }
+
       this.variables = {
         author: this.props.author,
         currentYear: this.props.currentYear,
@@ -160,7 +168,8 @@ module.exports = yeoman.generators.Base.extend({
         packageName: this.props.packageName,
         baseName: this.props.baseName,
         configUri: this.props.configUri,
-        configFail: this.props.configFail
+        configFail: this.props.configFail,
+        extraDependencies: deps
       };
 
       // write all files now, with or without template functionality

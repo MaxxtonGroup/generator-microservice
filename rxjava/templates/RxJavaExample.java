@@ -2,6 +2,7 @@ package <%= packageName %>.examples;
 
 import rx.Observable;
 import rx.functions.Func2;
+import rx.schedulers.Schedulers;
 
 /**
  * Maxxton RxJava example 

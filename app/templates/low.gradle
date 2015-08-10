@@ -1,2 +1,2 @@
-compile("org.hibernate:hibernate-core")
-compile("org.springframework.data:spring-data-jpa")
+	compile("org.hibernate:hibernate-core")
+	compile("org.springframework.data:spring-data-jpa")
