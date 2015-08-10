@@ -1,0 +1,1 @@
+compile("org.springframework.cloud:spring-cloud-security")

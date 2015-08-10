@@ -64,6 +64,7 @@ dependencies {
   compile("org.springframework.cloud:spring-cloud-starter-hystrix")
   compile("org.springframework.cloud:spring-cloud-starter-eureka")
   compile("io.reactivex:rxjava")
+  <%= extraDependencies %>
 
   compile("org.springframework.security.oauth:spring-security-oauth2")
      
