@@ -51,32 +51,32 @@ import org.springframework.boot.SpringApplication;
  */
 public class EurekaExample
 {
-	/**
-	 * Example main method
-	 */
-	public static void main(String args[])
-	{
-		SpringApplication.run(EurekaExample.class, args);
-	}
+  /**
+   * Example main method
+   */
+  public static void main(String args[])
+  {
+    SpringApplication.run(EurekaExample.class, args);
+  }
 
-	public EurekaExample()
-	{
-		System.out.println(this.getLocation());
-	}
+  public EurekaExample()
+  {
+    System.out.println(this.getLocation());
+  }
 
-	/**
+  /**
    * ! Commented in case !
    * @Autowired
    */
-	private DiscoveryClient discoveryClient;
+  private DiscoveryClient discoveryClient;
 
-	/**
-	 * Fetches the information of the service with id "EurekaExample".
-	 * Then returnes the homepage url as a String.
-	 */
-	private String getLocation()
-	{
-		InstanceInfo info = discoveryClient.getNextServerFromEureka("EurekaExample", false);
+  /**
+   * Fetches the information of the service with id "EurekaExample".
+   * Then returnes the homepage url as a String.
+   */
+  private String getLocation()
+  {
+    InstanceInfo info = discoveryClient.getNextServerFromEureka("EurekaExample", false);
     return info.getHomePageUrl();
-	}
+  }
 }
