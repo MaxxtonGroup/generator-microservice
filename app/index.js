@@ -134,7 +134,8 @@ module.exports = yeoman.generators.Base.extend({
       // composed ones
       this.props.author = this.props.userName + ' (' + this.props.userEmail + ')';
       this.props.currentYear = (new Date()).getFullYear();
-      this.props.mainClassName = createAppName(this.props.baseName) + 'Application';
+      this.props.applicationName = createAppName(this.props.baseName);
+      this.props.mainClassName = this.props.applicationName + 'Application';
 
       this.props.isBasic = this.props.serviceType === 'basic';
       this.props.isHigh = this.props.serviceType === 'high';

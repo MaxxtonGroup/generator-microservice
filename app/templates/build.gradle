@@ -52,23 +52,51 @@ repositories {
   mavenCentral()
   maven { url 'http://repo.spring.io/milestone' }
   maven { url 'http://repo.spring.io/snapshot' }
+
+  maven {
+    name 'Maxxton Private repository'
+    url 'http://192.168.252.141:9999/repository/internal'
+    credentials {
+      username 'microservices'
+      password 'passw0rd'
+    }
+  }
 }
 
 
 dependencies {
-  compile("org.springframework.boot:spring-boot-starter")
-  compile("org.springframework.boot:spring-boot-starter-actuator")
+  compile("org.springframework.boot:spring-boot-starter:${spring_boot_version}")
+  compile("org.springframework.boot:spring-boot-starter-actuator:${spring_boot_version}")
+  compile("org.springframework.boot:spring-boot-starter-logging:${spring_boot_version}")
+  compile("org.springframework.boot:spring-boot-starter-data-jpa:${spring_boot_version}")
+  compile("org.springframework.boot:spring-boot-starter-tomcat:${spring_boot_version}")
+  compile("org.springframework.boot:spring-boot-starter-security:${spring_boot_version}")
   
-  compile("org.springframework.cloud:spring-cloud-starter")
-  compile("org.springframework.cloud:spring-cloud-starter-security")
-  compile("org.springframework.cloud:spring-cloud-starter-hystrix")
-  compile("org.springframework.cloud:spring-cloud-starter-eureka")
-  compile("io.reactivex:rxjava")
+  compile("org.springframework.cloud:spring-cloud-starter:${spring_cloud_version}")
+  compile("org.springframework.cloud:spring-cloud-starter-security:${spring_cloud_version}")
+  compile("org.springframework.cloud:spring-cloud-starter-hystrix:${spring_cloud_version}")
+  compile("org.springframework.cloud:spring-cloud-starter-eureka:${spring_cloud_version}")
+  compile("org.springframework.cloud:spring-cloud-starter-config:${spring_cloud_version}")
+
+  compile("io.reactivex:rxjava:${rxjava_version}")
+
+  compile("com.ryantenney.metrics:metrics-spring:${spring_metrics_version}") {
+    exclude group: 'com.codahale.metrics'
+    exclude group: 'org.springframework'
+  }
+
+  compile("io.dropwizard.metrics:metrics-core:${dropwizard_metrics_version}")
+  compile("io.dropwizard.metrics:metrics-annotation:${dropwizard_metrics_version}")
+  compile("io.dropwizard.metrics:metrics-healthchecks:${dropwizard_metrics_version}")
+  compile("io.dropwizard.metrics:metrics-jvm:${dropwizard_metrics_version}")
+  compile("io.dropwizard.metrics:metrics-ehcache:${dropwizard_metrics_version}")
+
   <%= extraDependencies %>
 
-  compile("org.springframework.security.oauth:spring-security-oauth2")
-     
-  testCompile("org.springframework.boot:spring-boot-starter-test")
+  testCompile("org.springframework.boot:spring-boot-starter-test:${spring_boot_version}")
+  testCompile("org.assertj:assertj-core:${assertj_core_version}")
+  testCompile("junit:junit:${junit_version}")
+  testCompile("org.mockito:mockito-core:${mockito_version}")
 }
 
 dependencyManagement {

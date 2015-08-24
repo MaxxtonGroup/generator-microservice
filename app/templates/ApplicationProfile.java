@@ -1,7 +1,7 @@
 package <%= packageName %>.config;
 
 /**
- * Maxxton Microservice main class 
+ * Maxxton Microservice profiles
  *
  * @author <%= author %>
  * @copyright Maxxton Group <%= currentYear %>
