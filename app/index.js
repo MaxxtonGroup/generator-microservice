@@ -180,6 +180,11 @@ module.exports = yeoman.generators.Base.extend({
         { 'interpolate': /<%=([\s\S]+?)%>/g }
       );
 
+      this.fs.copyTpl(
+        this.templatePath('gradle.properties'),
+        this.destinationPath('gradle.properties')
+      );
+
       if(this.props.needDocker) {
         this.fs.copyTpl(
           this.templatePath('Dockerfile'),
@@ -187,7 +192,7 @@ module.exports = yeoman.generators.Base.extend({
           this.variables,
         { 'interpolate': /<%=([\s\S]+?)%>/g }
         );
-      }
+      };
 
       this.fs.copyTpl(
         this.templatePath('logback.xml'),
