@@ -22,7 +22,7 @@ import org.springframework.core.env.SimpleCommandLinePropertySource;
 import java.util.Arrays;
 
 /**
- * Maxxton Microservice main class 
+ * Maxxton Microservice main class for <%= baseName %>.
  *
  * @author <%= author %>
  * @copyright Maxxton Group <%= currentYear %>

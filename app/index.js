@@ -235,6 +235,12 @@ module.exports = yeoman.generators.Base.extend({
       );
 
       this.fs.copyTpl(
+        this.templatePath('DevelopmentPropertySourceLocator.java'),
+        this.destinationPath(srcDir + '/config/DevelopmentPropertySourceLocator.java'),
+        this.variables
+      );
+
+      this.fs.copyTpl(
         this.templatePath('MaxxtonApplicationTest.java'),
         this.destinationPath(testDir + '/'+ this.props.mainClassName +'Test.java'),
         this.variables
