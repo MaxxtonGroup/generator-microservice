@@ -71,11 +71,11 @@ dependencies {
   compile("org.springframework.boot:spring-boot-starter-tomcat:${spring_boot_version}")
   compile("org.springframework.boot:spring-boot-starter-security:${spring_boot_version}")
   
-  compile("org.springframework.cloud:spring-cloud-starter:${spring_cloud_version}")
-  compile("org.springframework.cloud:spring-cloud-starter-security:${spring_cloud_version}")
-  compile("org.springframework.cloud:spring-cloud-starter-hystrix:${spring_cloud_version}")
-  compile("org.springframework.cloud:spring-cloud-starter-eureka:${spring_cloud_version}")
-  compile("org.springframework.cloud:spring-cloud-starter-config:${spring_cloud_version}")
+  compile("org.springframework.cloud:spring-cloud-starter")
+  compile("org.springframework.cloud:spring-cloud-starter-security")
+  compile("org.springframework.cloud:spring-cloud-starter-hystrix")
+  compile("org.springframework.cloud:spring-cloud-starter-eureka")
+  compile("org.springframework.cloud:spring-cloud-starter-config")
 
   compile("io.reactivex:rxjava:${rxjava_version}")
 
