@@ -14,9 +14,6 @@ var jsfs = require('fs');
  * 
  * ==============================
  * 
- * TODO:
- * - application flavors
- * - subgenerators for services, controllers, repositories
  */
 
 
@@ -46,6 +43,7 @@ module.exports = yeoman.generators.Base.extend({
       '==============================\n' +
       'Version: 1.0\n' +
       'Author: R. Sonke (r.sonke@maxxton.com)\n\n' +
+      'Author: R. Hermans (r.hermans@maxxton.com)\n\n' +
       '==============================\n\n' +
       'Lets get started with some questions!\n\n' 
     );
@@ -56,7 +54,7 @@ module.exports = yeoman.generators.Base.extend({
   prompting: function () {
     var done = this.async();
 
-    var maxPrompts = 8;
+    var maxPrompts = 9;
 
     var prompts = 
     [
@@ -126,6 +124,12 @@ module.exports = yeoman.generators.Base.extend({
         default: 'Y',
         store: true
       },
+      {
+        type: 'confirm',
+        name: 'needSwagger',
+        message: '(9/'+maxPrompts+') Shall I generate the configuration and dependencies to use Swagger for Rest api documentation?',
+        default: 'Y'
+      },
     ];
 
     this.prompt(prompts, function (props) {
@@ -163,13 +167,15 @@ module.exports = yeoman.generators.Base.extend({
         currentYear: this.props.currentYear,
         serviceType: this.props.serviceType,
         mainClassName: this.props.mainClassName,
+        applicationName: this.props.applicationName,
         userEmail: this.props.userEmail,
         userName: this.props.userName,
         packageName: this.props.packageName,
         baseName: this.props.baseName,
         configUri: this.props.configUri,
         configFail: this.props.configFail,
-        extraDependencies: deps
+        extraDependencies: deps,
+        swaggerEnabled: this.props.needSwagger
       };
 
       // write all files now, with or without template functionality
@@ -245,6 +251,20 @@ module.exports = yeoman.generators.Base.extend({
         this.destinationPath(testDir + '/'+ this.props.mainClassName +'Test.java'),
         this.variables
       );
+
+      if(this.props.needSwagger) {
+        this.fs.copyTpl(
+          this.templatePath('SwaggerConfig.java'),
+          this.destinationPath(srcDir + '/config/SwaggerConfig.java'),
+          this.variables
+        );
+        this.fs.copyTpl(
+          this.templatePath('SwaggerController.java'),
+          this.destinationPath(srcDir + '/rest/SwaggerController.java'),
+          this.variables
+        );
+      }
+
     },
     projectfiles: function () {
       this.fs.copy(

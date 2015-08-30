@@ -79,6 +79,11 @@ dependencies {
 
   compile("io.reactivex:rxjava:${rxjava_version}")
 
+  <% if (swaggerEnabled) { %>
+  compile("io.springfox:springfox-swagger2:${spring_swagger_version}")
+  compile("io.springfox:springfox-swagger-ui:${spring_swagger_version}")
+  <% } %>
+
   compile("com.ryantenney.metrics:metrics-spring:${spring_metrics_version}") {
     exclude group: 'com.codahale.metrics'
     exclude group: 'org.springframework'
