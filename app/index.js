@@ -188,7 +188,9 @@ module.exports = yeoman.generators.Base.extend({
 
       this.fs.copyTpl(
         this.templatePath('gradle.properties'),
-        this.destinationPath('gradle.properties')
+        this.destinationPath('gradle.properties'),
+        this.variables,
+        { 'interpolate': /<%=([\s\S]+?)%>/g }
       );
 
       if(this.props.needDocker) {
