@@ -2,7 +2,3 @@
 endpoints:
   restart:
     enabled: true
-
-spring:
-  application:
-    name: roompot
