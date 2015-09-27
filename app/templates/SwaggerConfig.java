@@ -53,6 +53,7 @@ public class SwaggerConfig
    *
    * @return
    */
+  @SuppressWarnings("unchecked")
   private Predicate<String> paths() {
     return or(
       regex("/env.*"),
