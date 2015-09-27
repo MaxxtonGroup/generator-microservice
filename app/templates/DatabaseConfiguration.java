@@ -40,7 +40,7 @@ public class DatabaseConfiguration implements EnvironmentAware
     this.propertyResolver = new RelaxedPropertyResolver(environment, "spring.datasource.");
   }
 
-  @Bean(name = "dataSource",destroyMethod = "shutdown")
+  @Bean(name = "dataSource",destroyMethod = "close")
   public DataSource dataSource()
   {
     HikariConfig hikariConfig = new HikariConfig();
