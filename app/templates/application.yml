@@ -1,4 +1,0 @@
-# allow to restart the app context through /restart
-endpoints:
-  restart:
-    enabled: true

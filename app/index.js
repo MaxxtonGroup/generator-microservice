@@ -217,13 +217,6 @@ module.exports = yeoman.generators.Base.extend({
       );
 
       this.fs.copyTpl(
-        this.templatePath('application.yml'),
-        this.destinationPath('src/main/resources/application.yml'),
-        this.variables,
-        { 'interpolate': /<%=([\s\S]+?)%>/g }
-      );
-
-      this.fs.copyTpl(
         this.templatePath('bootstrap.yml'),
         this.destinationPath('src/main/resources/bootstrap.yml'),
         this.variables,
