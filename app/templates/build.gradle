@@ -79,6 +79,12 @@ dependencies {
 
   compile("io.reactivex:rxjava:${rxjava_version}")
 
+  <% if (dataJpaEnabled) { %>
+  compile("org.springframework.boot:spring-boot-starter-data-jpa:${spring_boot_version}")
+  compile("com.zaxxer:HikariCP:${hikaricp_version}")
+  compile("com.oracle:ojdbc6:${oracle_jdbc_version}")
+  <% } %>
+
   <% if (swaggerEnabled) { %>
   compile("io.springfox:springfox-swagger2:${spring_swagger_version}")
   compile("io.springfox:springfox-swagger-ui:${spring_swagger_version}")
@@ -94,8 +100,6 @@ dependencies {
   compile("io.dropwizard.metrics:metrics-healthchecks:${dropwizard_metrics_version}")
   compile("io.dropwizard.metrics:metrics-jvm:${dropwizard_metrics_version}")
   compile("io.dropwizard.metrics:metrics-ehcache:${dropwizard_metrics_version}")
-
-  <%= extraDependencies %>
 
   testCompile("org.springframework.boot:spring-boot-starter-test:${spring_boot_version}")
   testCompile("org.assertj:assertj-core:${assertj_core_version}")

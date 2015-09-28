@@ -42,8 +42,8 @@ module.exports = yeoman.generators.Base.extend({
       yosay() + '\n\n' +
       '==============================\n' +
       'Version: 1.0\n' +
-      'Author: R. Sonke (r.sonke@maxxton.com)\n\n' +
-      'Author: R. Hermans (r.hermans@maxxton.com)\n\n' +
+      'Author: R. Sonke (r.sonke@maxxton.com)\n' +
+      'Author: R. Hermans (r.hermans@maxxton.com)\n' +
       '==============================\n\n' +
       'Lets get started with some questions!\n\n' 
     );
@@ -85,23 +85,11 @@ module.exports = yeoman.generators.Base.extend({
         store: true
       },
       {
-        type: 'list',
-        name: 'serviceType',
-        message: '(5/'+maxPrompts+') Select the kind of service you need.',
-        choices: [
-          {
-            name: 'Basic (empty application which uses only default options)',
-            value: 'basic'
-          },
-          {
-            name: 'High level service (A business logic service with a rest interface)',
-            value: 'high'
-          },
-          {
-            name: 'Low level service (A backend service talking to datasources and never gets called by a user directly)',
-            value: 'low'
-          }
-        ]
+        type: 'confirm',
+        name: 'needDatabase',
+        message: '(5/'+maxPrompts+') Do you require Oracle database access in this service?',
+        default: 'Y',
+        store: true
       },
       {
         type: 'string',
@@ -141,10 +129,6 @@ module.exports = yeoman.generators.Base.extend({
       this.props.applicationName = createAppName(this.props.baseName);
       this.props.mainClassName = this.props.applicationName + 'Application';
 
-      this.props.isBasic = this.props.serviceType === 'basic';
-      this.props.isHigh = this.props.serviceType === 'high';
-      this.props.isLow = this.props.serviceType === 'low';
-
       done();
     }.bind(this));
   },
@@ -154,13 +138,6 @@ module.exports = yeoman.generators.Base.extend({
       var packageFolder = this.props.packageName.replace(/\./g, '/');
       var srcDir = 'src/main/java/' + packageFolder;
       var testDir = 'src/test/java/' + packageFolder;
-
-      var deps = "";
-      if(this.props.isLow){
-        deps = jsfs.readFileSync(this.sourceRoot() + '/low.gradle','utf8');
-      }else if(this.props.isHigh){
-        deps = jsfs.readFileSync(this.sourceRoot() + '/high.gradle','utf8');
-      }
 
       this.variables = {
         author: this.props.author,
@@ -174,8 +151,8 @@ module.exports = yeoman.generators.Base.extend({
         baseName: this.props.baseName,
         configUri: this.props.configUri,
         configFail: this.props.configFail,
-        extraDependencies: deps,
-        swaggerEnabled: this.props.needSwagger
+        swaggerEnabled: this.props.needSwagger,
+        dataJpaEnabled: this.props.needDatabase
       };
 
       // write all files now, with or without template functionality
@@ -256,6 +233,14 @@ module.exports = yeoman.generators.Base.extend({
         this.fs.copyTpl(
           this.templatePath('SwaggerController.java'),
           this.destinationPath(srcDir + '/rest/SwaggerController.java'),
+          this.variables
+        );
+      }
+
+      if(this.props.needDatabase) {
+        this.fs.copyTpl(
+          this.templatePath('DatabaseConfiguration.java'),
+          this.destinationPath(srcDir + '/config/DatabaseConfiguration.java'),
           this.variables
         );
       }
