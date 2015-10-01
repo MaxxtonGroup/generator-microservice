@@ -94,21 +94,22 @@ module.exports = yeoman.generators.Base.extend({
         );
       }
 
+			//### DEPRICATED: Due to removal of the application.yml file ###//
       // Update current application.yml to insert eureka configuration.
-      try{
-        var config = yaml.safeLoad(yamlfs.readFileSync('src/main/resources/application.yml', 'utf8'));
+      // try{
+      //   var config = yaml.safeLoad(yamlfs.readFileSync('src/main/resources/application.yml', 'utf8'));
 
-        if(this.props.connectionType === 'hostname'){
-          config.eureka = {instance: {hostname: this.props.hostname } };
-        }else if (this.props.connectionType == 'ipaddress'){
-          config.eureka = {instance: {preferIpAddress: true} };
-        }
+      //   if(this.props.connectionType === 'hostname'){
+      //     config.eureka = {instance: {hostname: this.props.hostname } };
+      //   }else if (this.props.connectionType == 'ipaddress'){
+      //     config.eureka = {instance: {preferIpAddress: true} };
+      //   }
 
-        yamlfs.writeFileSync('src/main/resources/application.yml', yaml.safeDump(config));
-      }catch (e){
-        this.log(chalk.red('Failed to update "application.yml" for the Eureka dependency!'));
-        this.log(e);
-      }
+      //   yamlfs.writeFileSync('src/main/resources/application.yml', yaml.safeDump(config));
+      // }catch (e){
+      //   this.log(chalk.red('Failed to update "application.yml" for the Eureka dependency!'));
+      //   this.log(e);
+      // }
     }
   },
 
