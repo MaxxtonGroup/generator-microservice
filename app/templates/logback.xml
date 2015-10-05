@@ -36,6 +36,22 @@
     <resetJUL>true</resetJUL>
   </contextListener>
 
+  <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+    <destination>mxt-logstash02.newyse.maxxton:5010</destination>
+    <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+  </appender>
+
+
+  <root level="ERROR">
+    <appender-ref ref="logstash" />
+  </root>
+  <root level="INFO">
+    <appender-ref ref="logstash" />
+  </root>
+  <root level="WARN">
+    <appender-ref ref="logstash" />
+  </root>
+
   <root level="${logback.loglevel}">
     <appender-ref ref="CONSOLE"/>
   </root>
