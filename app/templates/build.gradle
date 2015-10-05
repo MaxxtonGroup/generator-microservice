@@ -55,10 +55,10 @@ repositories {
 
   maven {
     name 'Maxxton Private repository'
-    url 'http://192.168.252.141:9999/repository/internal'
+    url 'https://mxt-maven01.newyse.maxxton/repository/internal'
     credentials {
       username 'microservices'
-      password 'passw0rd'
+      password 'changeThisAfterGenerating'
     }
   }
 }
