@@ -37,7 +37,7 @@
   </contextListener>
 
   <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-    <destination>mxt-logstash02.newyse.maxxton:5010</destination>
+    <destination>mxt-logstash01.newyse.maxxton:5000</destination>
     <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
   </appender>
 
