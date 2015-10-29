@@ -26,7 +26,7 @@ import static springfox.documentation.schema.AlternateTypeRules.newRule;
  * Swagger rest api documentation configuration.
  *
  * @author R. Sonke (r.sonke@maxxton.com)
- * @copyright Maxxton Group 2015
+ * Maxxton Group 2015
  */
 @Configuration
 @EnableSwagger2

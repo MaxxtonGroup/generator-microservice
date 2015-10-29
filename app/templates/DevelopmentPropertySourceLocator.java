@@ -24,7 +24,7 @@ import org.springframework.core.io.FileSystemResource;
  * @see org.springframework.cloud.config.client.ConfigServicePropertySourceLocator
  *
  * @author R. Sonke (r.sonke@maxxton.com)
- * @copyright Maxxton Group <%= currentYear %>
+ * Maxxton Group <%= currentYear %>
  */
 @Configuration
 @Order(-1)

@@ -26,7 +26,7 @@ import java.util.Arrays;
  * Maxxton Microservice main class for <%= baseName %>.
  *
  * @author <%= author %>
- * @copyright Maxxton Group <%= currentYear %>
+ * Maxxton Group <%= currentYear %>
  */
 @SpringBootApplication
 @EnableDiscoveryClient

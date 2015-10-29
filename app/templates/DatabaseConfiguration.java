@@ -19,7 +19,7 @@ import com.zaxxer.hikari.HikariDataSource;
  * Database configuration class
  *
  * @author <%= author %>
- * @copyright Maxxton Group <%= currentYear %>
+ * Maxxton Group <%= currentYear %>
  */
 @Configuration
 @EnableJpaRepositories("<%= packageName %>.repository")

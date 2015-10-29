@@ -8,7 +8,7 @@ import rx.schedulers.Schedulers;
  * Maxxton RxJava example 
  *
  * @author <%= author %>
- * @copyright Maxxton Group <%= currentYear %>
+ * Maxxton Group <%= currentYear %>
  */
 public class RxJavaExample
 {

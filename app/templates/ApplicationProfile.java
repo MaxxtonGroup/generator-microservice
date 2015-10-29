@@ -4,7 +4,7 @@ package <%= packageName %>.config;
  * Maxxton Microservice profiles
  *
  * @author <%= author %>
- * @copyright Maxxton Group <%= currentYear %>
+ * Maxxton Group <%= currentYear %>
  */
 public interface ApplicationProfile
 {

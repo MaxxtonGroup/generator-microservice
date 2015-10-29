@@ -40,7 +40,7 @@ import org.springframework.boot.SpringApplication;
  * Maxxton Eureka client example 
  *
  * @author <%= author %>
- * @copyright Maxxton Group <%= currentYear %>
+ * Maxxton Group <%= currentYear %>
  */
 /**
  * ! For the sake of this example annotations are commented 
