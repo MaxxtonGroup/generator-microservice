@@ -1,0 +1,25 @@
+endpoints:
+  restart:
+    enabled: true
+
+spring:
+  application:
+    name: <%= baseName %>
+  oauth2:
+    resource:
+      jwt:
+        keyValue: |
+          -----BEGIN PUBLIC KEY----- MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnCJEMs0kvunxIUqDmon4iIa/QGe0BfxpCkR5giCLbpvLKECc8ZMdsyrOfsBEZhWXACTjGY2wDzcRIdJd/rL2Qq34Sij799Ykgc4LwImWpcpMSxhqB7mKdIALjLR0BDszLrfMlP/4p7Fu3UIqw/Q/+AFwVpRcFfyH4+/ixtyzGwuGhD0NrOmr5i18tClxnMKH1SiSoJmK2O9Yttdg6WrtwyWhNUcS+pCQTJF7c3WQt+OG5T8G75TJ1OpB5bXLucmbJbeVE3li1Ibq7OO+iT0gB+khAMfpaB1tjnjqTltZwmohYhg0ow4erFkAu/AHGhpGXCB6jmOvFtN+Uj3EotuVYwIDAQAB
+          -----END PUBLIC KEY-----
+
+server:
+  port: <%= serverPort %>
+  contextPath: /api/v1
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: <%= eurekaUri %>
+#http://localhost:8002/eureka/
+  instance:
+     preferIpAddress: true

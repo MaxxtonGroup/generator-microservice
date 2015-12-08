@@ -11,28 +11,28 @@ var jsfs = require('fs');
  * ==============================
  * Version: 1.0
  * Author: R. Sonke (r.sonke@maxxton.com)
- * 
+ *
  * ==============================
- * 
+ *
  */
 
 
 var createAppName = function(str)
 {
   str = str.replace(new RegExp('-|_', 'g'), ' ');
-  
+
   var partsOfStr = str.split(' ');
   var result = '';
   partsOfStr.forEach(function(word) {
     result += word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
   });
-  
+
   return result;
 }
 
 module.exports = yeoman.generators.Base.extend({
 
-  constructor: function (args, options, config) 
+  constructor: function (args, options, config)
   {
     yeoman.generators.Base.apply(this, arguments);
 
@@ -41,11 +41,13 @@ module.exports = yeoman.generators.Base.extend({
       chalk.red('Maxxton Microservice generator\n\n') +
       yosay() + '\n\n' +
       '==============================\n' +
-      'Version: 1.0\n' +
+      'Version: 1.1\n' +
       'Author: R. Sonke (r.sonke@maxxton.com)\n' +
       'Author: R. Hermans (r.hermans@maxxton.com)\n' +
+      'Author: C. Vaes (c.vaes@maxxton.com)\n' +
+      'Author: R. Wolffensperger (r.wolffensperger@maxxton.com)\n' +
       '==============================\n\n' +
-      'Lets get started with some questions!\n\n' 
+      'Lets get started with some questions!\n\n'
     );
 
     this.log(chalk.magenta('Generating service structure'));
@@ -54,9 +56,9 @@ module.exports = yeoman.generators.Base.extend({
   prompting: function () {
     var done = this.async();
 
-    var maxPrompts = 9;
+    var maxPrompts = 11;
 
-    var prompts = 
+    var prompts =
     [
       {
         type: 'string',
@@ -66,63 +68,76 @@ module.exports = yeoman.generators.Base.extend({
       },
       {
         type: 'string',
+        name: 'serverPort',
+        message: '(2/'+maxPrompts+') What is the port of this microservice?',
+        default: '8080'
+      },
+      {
+        type: 'string',
         name: 'packageName',
-        message: '(2/'+maxPrompts+') What is your default package?',
+        message: '(3/'+maxPrompts+') What is your default package?',
         default: 'com.maxxton.awesome'
       },
       {
         type: 'string',
         name: 'userName',
-        message: '(3/'+maxPrompts+') What is your name?',
+        message: '(4/'+maxPrompts+') What is your name?',
         default: 'M. Axxton',
         store: true
       },
       {
         type: 'string',
         name: 'userEmail',
-        message: '(4/'+maxPrompts+') What is your email?',
+        message: '(5/'+maxPrompts+') What is your email?',
         default: 'm.axxton@maxxton.com',
         store: true
       },
       {
         type: 'confirm',
         name: 'needDatabase',
-        message: '(5/'+maxPrompts+') Do you require Oracle database access in this service?',
+        message: '(6/'+maxPrompts+') Do you require Oracle database access in this service?',
         default: 'Y',
         store: true
       },
       {
         type: 'string',
         name: 'configUri',
-        message: '(6/'+maxPrompts+') Provide the uri for the Spring Config Server.',
+        message: '(7/'+maxPrompts+') Provide the uri for the Spring Config Server.',
         default: 'http://localhost:8888',
         store: true
       },
       {
         type: 'confirm',
         name: 'configFail',
-        message: '(7/'+maxPrompts+') Should the service fail fast when not being able to connect to the Spring Config Server?',
+        message: '(8/'+maxPrompts+') Should the service fail fast when not being able to connect to the Spring Config Server?',
         default: true,
+        store: true
+      },
+      {
+        type: 'string',
+        name: 'eurekaUri',
+        message: '(9/'+maxPrompts+') Provide the uri for the Eureka Server.',
+        default: 'http://192.168.252.141:8002/eureka/',
         store: true
       },
       {
         type: 'confirm',
         name: 'needDocker',
-        message: '(8/'+maxPrompts+') Shall I generate a default Dockerfile?',
+        message: '(10/'+maxPrompts+') Shall I generate a default Dockerfile?',
         default: 'Y',
         store: true
       },
       {
         type: 'confirm',
         name: 'needSwagger',
-        message: '(9/'+maxPrompts+') Shall I generate the configuration and dependencies to use Swagger for Rest api documentation?',
+        message: '(11/'+maxPrompts+') Shall I generate the configuration and dependencies to use Swagger for Rest api documentation?',
         default: 'Y'
       },
     ];
 
     this.prompt(prompts, function (props) {
       this.props = props;
-      
+
       // composed ones
       this.props.author = this.props.userName + ' (' + this.props.userEmail + ')';
       this.props.currentYear = (new Date()).getFullYear();
@@ -149,8 +164,10 @@ module.exports = yeoman.generators.Base.extend({
         userName: this.props.userName,
         packageName: this.props.packageName,
         baseName: this.props.baseName,
+        serverPort: this.props.serverPort,
         configUri: this.props.configUri,
         configFail: this.props.configFail,
+        eurekaUri: this.props.eurekaUri,
         swaggerEnabled: this.props.needSwagger,
         dataJpaEnabled: this.props.needDatabase
       };
@@ -199,7 +216,14 @@ module.exports = yeoman.generators.Base.extend({
         this.variables,
         { 'interpolate': /<%=([\s\S]+?)%>/g }
       );
-      
+
+      this.fs.copyTpl(
+        this.templatePath('application.yml'),
+        this.destinationPath('src/main/resources/application.yml'),
+        this.variables,
+        { 'interpolate': /<%=([\s\S]+?)%>/g }
+      );
+
       this.fs.copyTpl(
         this.templatePath('MaxxtonApplication.java'),
         this.destinationPath(srcDir + '/'+ this.props.mainClassName +'.java'),
@@ -221,6 +245,12 @@ module.exports = yeoman.generators.Base.extend({
       this.fs.copyTpl(
         this.templatePath('MaxxtonApplicationTest.java'),
         this.destinationPath(testDir + '/'+ this.props.mainClassName +'Test.java'),
+        this.variables
+      );
+
+      this.fs.copyTpl(
+        this.templatePath('SecurityConfig.java'),
+        this.destinationPath(srcDir + '/config/SecurityConfig.java'),
         this.variables
       );
 
@@ -254,7 +284,7 @@ module.exports = yeoman.generators.Base.extend({
     }
   },
   install: function () {
-    
+
   },
   end: function () {
     this.log(chalk.green('Basic service completed!\n'));

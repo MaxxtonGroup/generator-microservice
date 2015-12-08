@@ -13,6 +13,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.system.ApplicationPidFileWriter;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.security.oauth2.resource.EnableOAuth2Resource;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -29,6 +30,7 @@ import java.util.Arrays;
  * Maxxton Group <%= currentYear %>
  */
 @SpringBootApplication
+@EnableOAuth2Resource
 @EnableDiscoveryClient
 public class <%= mainClassName %>
 {
