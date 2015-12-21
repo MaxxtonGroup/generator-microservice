@@ -1,4 +1,4 @@
-package com.maxxton.resource.config;
+package <%= packageName %>.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
