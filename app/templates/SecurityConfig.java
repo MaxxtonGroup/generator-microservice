@@ -11,6 +11,15 @@ public class SecurityConfig extends ResourceServerConfigurerAdapter {
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
-    http.httpBasic().disable().authorizeRequests().anyRequest().permitAll();
+  	/*
+     * In order to allow certain routes to pass through add antmatchers
+     * http.authorizeRequests().antMatchers("/myroute", "/otherroute").permitAll().anyRequest().authenticated();
+     *
+     * In case you want to temporary disable the config for testing replace the config by this
+     * http.authorizeRequests().anyRequest().permitAll();
+     *
+     * Be sure to change it back once you finished testing
+     */
+    http.authorizeRequests().anyRequest().authenticated();
   }
 }
