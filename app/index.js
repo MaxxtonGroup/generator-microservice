@@ -262,7 +262,7 @@ module.exports = yeoman.generators.Base.extend({
         );
         this.fs.copyTpl(
           this.templatePath('SwaggerController.java'),
-          this.destinationPath(srcDir + '/rest/SwaggerController.java'),
+          this.destinationPath(srcDir + '/controller/SwaggerController.java'),
           this.variables
         );
       }
