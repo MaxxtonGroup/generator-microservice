@@ -30,6 +30,17 @@ var createAppName = function(str)
   return result;
 }
 
+var getServiceName = function(str)
+{
+  var res = str.split('-');
+  return res[0]
+}
+
+var capitalize = function(str)
+{
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 module.exports = yeoman.generators.Base.extend({
 
   constructor: function (args, options, config)
@@ -56,7 +67,7 @@ module.exports = yeoman.generators.Base.extend({
   prompting: function () {
     var done = this.async();
 
-    var maxPrompts = 11;
+    var maxPrompts = 10;
 
     var prompts =
     [
@@ -127,12 +138,6 @@ module.exports = yeoman.generators.Base.extend({
         default: 'Y',
         store: true
       },
-      {
-        type: 'confirm',
-        name: 'needSwagger',
-        message: '(11/'+maxPrompts+') Shall I generate the configuration and dependencies to use Swagger for Rest api documentation?',
-        default: 'Y'
-      },
     ];
 
     this.prompt(prompts, function (props) {
@@ -143,6 +148,8 @@ module.exports = yeoman.generators.Base.extend({
       this.props.currentYear = (new Date()).getFullYear();
       this.props.applicationName = createAppName(this.props.baseName);
       this.props.mainClassName = this.props.applicationName + 'Application';
+      this.props.serviceName = getServiceName(this.props.baseName);
+      this.props.configClassName = capitalize(this.props.serviceName) + 'SecurityConfig';
 
       done();
     }.bind(this));
@@ -168,8 +175,9 @@ module.exports = yeoman.generators.Base.extend({
         configUri: this.props.configUri,
         configFail: this.props.configFail,
         eurekaUri: this.props.eurekaUri,
-        swaggerEnabled: this.props.needSwagger,
-        dataJpaEnabled: this.props.needDatabase
+        dataJpaEnabled: this.props.needDatabase,
+        configClassName: this.props.configClassName,
+        serviceName: this.props.serviceName
       };
 
       // write all files now, with or without template functionality
@@ -187,6 +195,13 @@ module.exports = yeoman.generators.Base.extend({
         { 'interpolate': /<%=([\s\S]+?)%>/g }
       );
 
+      this.fs.copyTpl(
+        this.templatePath('.gitignore'),
+        this.destinationPath('.gitignore'),
+        this.variables,
+        { 'interpolate': /<%=([\s\S]+?)%>/g }
+      );
+      
       if(this.props.needDocker) {
         this.fs.copyTpl(
           this.templatePath('Dockerfile'),
@@ -231,18 +246,6 @@ module.exports = yeoman.generators.Base.extend({
       );
 
       this.fs.copyTpl(
-        this.templatePath('ApplicationProfile.java'),
-        this.destinationPath(srcDir + '/config/ApplicationProfile.java'),
-        this.variables
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('DevelopmentPropertySourceLocator.java'),
-        this.destinationPath(srcDir + '/config/DevelopmentPropertySourceLocator.java'),
-        this.variables
-      );
-
-      this.fs.copyTpl(
         this.templatePath('MaxxtonApplicationTest.java'),
         this.destinationPath(testDir + '/'+ this.props.mainClassName +'Test.java'),
         this.variables
@@ -250,30 +253,9 @@ module.exports = yeoman.generators.Base.extend({
 
       this.fs.copyTpl(
         this.templatePath('SecurityConfig.java'),
-        this.destinationPath(srcDir + '/config/SecurityConfig.java'),
+        this.destinationPath(srcDir + '/config/' + this.props.configClassName + '.java'),
         this.variables
       );
-
-      if(this.props.needSwagger) {
-        this.fs.copyTpl(
-          this.templatePath('SwaggerConfig.java'),
-          this.destinationPath(srcDir + '/config/SwaggerConfig.java'),
-          this.variables
-        );
-        this.fs.copyTpl(
-          this.templatePath('SwaggerController.java'),
-          this.destinationPath(srcDir + '/controller/SwaggerController.java'),
-          this.variables
-        );
-      }
-
-      if(this.props.needDatabase) {
-        this.fs.copyTpl(
-          this.templatePath('DatabaseConfiguration.java'),
-          this.destinationPath(srcDir + '/config/DatabaseConfiguration.java'),
-          this.variables
-        );
-      }
 
     },
     projectfiles: function () {

@@ -1,17 +1,26 @@
 package <%= packageName %>.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 
-@Configuration
+/**
+ * Configuration for securing the service and overrides the security config of the jpa lib.
+ *
+ * @author <%= author %>
+ * Maxxton Group <%= currentYear %>
+ */
+
+@Configuration(value = "<%= serviceName %>SecurityConfig")
+@Order(-2)
 @EnableGlobalMethodSecurity(securedEnabled = true)
-public class SecurityConfig extends ResourceServerConfigurerAdapter {
+public class <%= configClassName %> extends ResourceServerConfigurerAdapter {
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
-  	/*
+    /*
      * In order to allow certain routes to pass through add antmatchers
      * http.authorizeRequests().antMatchers("/myroute", "/otherroute").permitAll().anyRequest().authenticated();
      *

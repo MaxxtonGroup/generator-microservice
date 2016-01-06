@@ -1,0 +1,29 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Java template
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+######################## MAXXTON ENTRIES ################################
+
+# ignore gradle and build folders
+.gradle
+build/
+
+# ignore workspace.xml and tasks.xml from intellij, rest should be added
+.idea/workspace.xml
+.idea/tasks.sql
+
+bin
+.settings
+RemoteSystemsTempFiles
+.metadata
+*.pid

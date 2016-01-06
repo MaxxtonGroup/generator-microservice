@@ -13,15 +13,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.system.ApplicationPidFileWriter;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.security.oauth2.resource.EnableOAuth2Resource;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.SimpleCommandLinePropertySource;
-
-
-
-import java.util.Arrays;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+<% if (dataJpaEnabled) { %>
+import com.maxxton.multi.concern.EnableMultiConcern;
+<% } %>
 
 /**
  * Maxxton Microservice main class for <%= baseName %>.
@@ -30,8 +29,9 @@ import java.util.Arrays;
  * Maxxton Group <%= currentYear %>
  */
 @SpringBootApplication
-@EnableOAuth2Resource
-@EnableDiscoveryClient
+@EnableResourceServer
+@EnableDiscoveryClient <% if (dataJpaEnabled) { %>
+@EnableMultiConcern<% } %>
 public class <%= mainClassName %>
 {
   private final static Logger log = LoggerFactory.getLogger(<%= mainClassName %>.class);
