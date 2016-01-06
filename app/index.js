@@ -137,6 +137,8 @@ module.exports = yeoman.generators.Base.extend({
       this.props.currentYear = (new Date()).getFullYear();
       this.props.applicationName = createAppName(this.props.baseName);
       this.props.mainClassName = this.props.applicationName + 'Application';
+      this.props.serviceName = getServiceName(this.props.baseName);
+      this.props.configClassName = capitalize(this.props.serviceName) + 'SecurityConfig';
 
       done();
     }.bind(this));
@@ -232,7 +234,7 @@ module.exports = yeoman.generators.Base.extend({
 
       this.fs.copyTpl(
         this.templatePath('SecurityConfig.java'),
-        this.destinationPath(srcDir + '/config/SecurityConfig.java'),
+        this.destinationPath(srcDir + '/config/' + this.props.configClassName + '.java'),
         this.variables
       );
 
