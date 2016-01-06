@@ -127,12 +127,6 @@ module.exports = yeoman.generators.Base.extend({
         default: 'Y',
         store: true
       },
-      {
-        type: 'confirm',
-        name: 'needSwagger',
-        message: '(11/'+maxPrompts+') Shall I generate the configuration and dependencies to use Swagger for Rest api documentation?',
-        default: 'Y'
-      },
     ];
 
     this.prompt(prompts, function (props) {
