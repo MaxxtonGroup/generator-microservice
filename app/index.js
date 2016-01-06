@@ -67,7 +67,7 @@ module.exports = yeoman.generators.Base.extend({
   prompting: function () {
     var done = this.async();
 
-    var maxPrompts = 11;
+    var maxPrompts = 10;
 
     var prompts =
     [
