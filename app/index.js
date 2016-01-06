@@ -231,18 +231,6 @@ module.exports = yeoman.generators.Base.extend({
       );
 
       this.fs.copyTpl(
-        this.templatePath('ApplicationProfile.java'),
-        this.destinationPath(srcDir + '/config/ApplicationProfile.java'),
-        this.variables
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('DevelopmentPropertySourceLocator.java'),
-        this.destinationPath(srcDir + '/config/DevelopmentPropertySourceLocator.java'),
-        this.variables
-      );
-
-      this.fs.copyTpl(
         this.templatePath('MaxxtonApplicationTest.java'),
         this.destinationPath(testDir + '/'+ this.props.mainClassName +'Test.java'),
         this.variables
@@ -253,27 +241,6 @@ module.exports = yeoman.generators.Base.extend({
         this.destinationPath(srcDir + '/config/SecurityConfig.java'),
         this.variables
       );
-
-      if(this.props.needSwagger) {
-        this.fs.copyTpl(
-          this.templatePath('SwaggerConfig.java'),
-          this.destinationPath(srcDir + '/config/SwaggerConfig.java'),
-          this.variables
-        );
-        this.fs.copyTpl(
-          this.templatePath('SwaggerController.java'),
-          this.destinationPath(srcDir + '/controller/SwaggerController.java'),
-          this.variables
-        );
-      }
-
-      if(this.props.needDatabase) {
-        this.fs.copyTpl(
-          this.templatePath('DatabaseConfiguration.java'),
-          this.destinationPath(srcDir + '/config/DatabaseConfiguration.java'),
-          this.variables
-        );
-      }
 
     },
     projectfiles: function () {

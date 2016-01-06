@@ -87,15 +87,10 @@ dependencies {
   compile("io.reactivex:rxjava:${rxjava_version}")
 
   <% if (dataJpaEnabled) { %>
-  compile("org.springframework.boot:spring-boot-starter-data-jpa:${spring_boot_version}")
-  compile("com.zaxxer:HikariCP:${hikaricp_version}")
-  compile("com.oracle:ojdbc6:${oracle_jdbc_version}")
+  compile("com.maxxton.multi.concern:maxxton-multi-concern-jpa:${maxxton_multi_concern_version}")
   <% } %>
 
-  <% if (swaggerEnabled) { %>
-  compile("io.springfox:springfox-swagger2:${spring_swagger_version}")
-  compile("io.springfox:springfox-swagger-ui:${spring_swagger_version}")
-  <% } %>
+  compile("com.maxxton.spring.boot.util:spring-boot-utils:${maxxton_spring_boot_util_version}")
 
   compile("com.ryantenney.metrics:metrics-spring:${spring_metrics_version}") {
     exclude group: 'com.codahale.metrics'
