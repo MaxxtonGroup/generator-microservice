@@ -1,9 +1,24 @@
+# Default configuration
+# This holds the base configuration and loads by default.
+# When setting a spring profile on the commandline you can override parts of this config.
+# Please note that the default config links development as it's default active profile (so this also loads when not setting a param).
 spring:
   application:
     name: <%= baseName %>
+  profiles:
+    active: development
+
+---
+
+# Development config
+# This configuration is set as the active profile in the default config.
+# Additional profiles can be chained by using a comma in the commandline parameter.
+# For example: -spring.profiles.active: developement,peer1 or -spring.profiles.active: developement,peer2
+spring:
+  profiles: development
   cloud:
     config:
       uri: <%= configUri %>
+      username: mxt-config-server
+      password: mxt-config-server
       failFast: <%= configFail %>
-encrypt:
-  failOnError: false

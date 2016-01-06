@@ -30,6 +30,17 @@ var createAppName = function(str)
   return result;
 }
 
+var getServiceName = function(str)
+{
+  var res = str.split('-');
+  return res[0]
+}
+
+var capitalize = function(str)
+{
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 module.exports = yeoman.generators.Base.extend({
 
   constructor: function (args, options, config)
@@ -164,8 +175,9 @@ module.exports = yeoman.generators.Base.extend({
         configUri: this.props.configUri,
         configFail: this.props.configFail,
         eurekaUri: this.props.eurekaUri,
-        swaggerEnabled: this.props.needSwagger,
-        dataJpaEnabled: this.props.needDatabase
+        dataJpaEnabled: this.props.needDatabase,
+        configClassName: this.props.configClassName,
+        serviceName: this.props.serviceName
       };
 
       // write all files now, with or without template functionality
@@ -183,6 +195,13 @@ module.exports = yeoman.generators.Base.extend({
         { 'interpolate': /<%=([\s\S]+?)%>/g }
       );
 
+      this.fs.copyTpl(
+        this.templatePath('.gitignore'),
+        this.destinationPath('.gitignore'),
+        this.variables,
+        { 'interpolate': /<%=([\s\S]+?)%>/g }
+      );
+      
       if(this.props.needDocker) {
         this.fs.copyTpl(
           this.templatePath('Dockerfile'),
