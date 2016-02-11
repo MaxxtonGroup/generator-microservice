@@ -18,7 +18,23 @@ spring:
   profiles: development
   cloud:
     config:
-      uri: <%= configUri %>
+      uri: http://192.168.252.141:8003
       username: mxt-config-server
       password: mxt-config-server
+      failFast: <%= configFail %>
+
+---
+
+# Production config
+# This configuration can be activated by using the commandline parameter.
+# For example: -spring-profiles.active: production.
+# Additional profiles can be chained by using a comma in the commandline parameter.
+# For example: -spring.profiles.active: production,peer1 or -spring.profiles.active: production,peer2
+spring:
+  profiles: production
+  cloud:
+    config:
+      uri: http://mxt-nwsconfig01.newyse.maxxton:8003
+      username: xxx
+      password: xxx
       failFast: <%= configFail %>

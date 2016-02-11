@@ -13,6 +13,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.system.ApplicationPidFileWriter;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -21,6 +22,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 <% if (dataJpaEnabled) { %>
 import com.maxxton.multi.concern.EnableMultiConcern;
 <% } %>
+import com.maxxton.spring.boot.annotation.EnableMaxxtonTools;
 
 /**
  * Maxxton Microservice main class for <%= baseName %>.
@@ -28,6 +30,8 @@ import com.maxxton.multi.concern.EnableMultiConcern;
  * @author <%= author %>
  * Maxxton Group <%= currentYear %>
  */
+@EnableCircuitBreaker
+@EnableMaxxtonTools
 @SpringBootApplication
 @EnableResourceServer
 @EnableDiscoveryClient <% if (dataJpaEnabled) { %>

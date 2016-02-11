@@ -233,13 +233,6 @@ module.exports = yeoman.generators.Base.extend({
       );
 
       this.fs.copyTpl(
-        this.templatePath('application.yml'),
-        this.destinationPath('src/main/resources/application.yml'),
-        this.variables,
-        { 'interpolate': /<%=([\s\S]+?)%>/g }
-      );
-
-      this.fs.copyTpl(
         this.templatePath('MaxxtonApplication.java'),
         this.destinationPath(srcDir + '/'+ this.props.mainClassName +'.java'),
         this.variables
