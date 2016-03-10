@@ -53,10 +53,11 @@ public class <%= mainClassName %>
 
   /**
    * Initializes application.
-   * <p/> Spring profiles can be configured with a program arguments --spring.profiles.active=your-active-profile <p/>
+   * <p>
+   * Spring profiles can be configured with a program arguments --spring.profiles.active=your-active-profile
    */
   @PostConstruct
-  public void initApplication() throws IOException
+  public void initApplication()
   {
     if (environment.getActiveProfiles().length == 0)
     {
