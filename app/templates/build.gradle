@@ -4,10 +4,6 @@ buildscript {
     maven {
       name 'Maxxton Private repository'
       url 'http://mxt-maven01.newyse.maxxton/repository/internal'
-      credentials {
-        username 'microservices'
-        password 'changeThisAfterGenerating'
-      }
     }
 	maven{
         name 'Bintray'
