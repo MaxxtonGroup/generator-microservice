@@ -196,6 +196,13 @@ module.exports = yeoman.generators.Base.extend({
       );
 
       this.fs.copyTpl(
+        this.templatePath('settings.gradle'),
+        this.destinationPath('settings.gradle'),
+        this.variables,
+        { 'interpolate': /<%=([\s\S]+?)%>/g }
+      );
+      
+      this.fs.copyTpl(
         this.templatePath('.gitignore'),
         this.destinationPath('.gitignore'),
         this.variables,
