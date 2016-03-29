@@ -15,7 +15,7 @@ buildscript {
     classpath("io.spring.gradle:dependency-management-plugin:0.5.3.RELEASE")
     classpath("se.transmode.gradle:gradle-docker:1.2")
     classpath('com.maxxton.gradle:gradle-documentation-plugin:0.1')
-    classpath("net.davidecavestro:gradle-jxr-plugin:${maxxton_gradle_plugin_version}")
+    classpath("net.davidecavestro:gradle-jxr-plugin:0.1")
   }
 }
 
