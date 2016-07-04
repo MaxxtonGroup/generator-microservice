@@ -25,6 +25,21 @@ spring:
 
 ---
 
+# Acceptance config
+# This configuration is set as the active profile in the default config.
+# Additional profiles can be chained by using a comma in the commandline parameter.
+# For example: -spring.profiles.active: acceptance,peer1 or -spring.profiles.active: acceptance,peer2
+spring:
+  profiles: acceptance
+  cloud:
+    config:
+      uri: http://test-services02.newyse.maxxton:8003
+      username: xxx
+      password: xxx
+      failFast: <%= configFail %>
+      
+---
+
 # Production config
 # This configuration can be activated by using the commandline parameter.
 # For example: -spring-profiles.active: production.
